@@ -25,6 +25,9 @@ export default {
       borderRadius: {
         "4xl": "2rem",
       },
+      height: {
+        "4screen": "400vh",
+      },
     },
   },
 };
