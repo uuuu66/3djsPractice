@@ -7,10 +7,11 @@ interface Props {
 const CanvasCamera: React.FC<Props> = ({ zIndex }) => {
   return (
     <PerspectiveCamera
-      aspect={window.innerWidth / window.innerHeight / 2}
+      aspect={window.innerWidth / window.innerHeight / 4}
       makeDefault
       position={new Vector3(0, 0, zIndex)}
-      zoom={-40}
+      fov={80}
+      zoom={-50}
     />
   );
 };

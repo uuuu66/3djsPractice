@@ -6,7 +6,7 @@ import Donut from "./Donut";
 const SwimSpace = () => {
   const [zIndex, setZIndex] = useState(500);
   useFrame(() => {
-    setZIndex((prev) => prev - 0.5);
+    setZIndex((prev) => prev - 1);
   });
   return (
     <>
@@ -22,7 +22,8 @@ const SwimSpace = () => {
       <Donut cameraZIndex={zIndex} />
       <Donut cameraZIndex={zIndex} />
       <Donut cameraZIndex={zIndex} />
-      <Donut cameraZIndex={zIndex} /> <Donut cameraZIndex={zIndex} />
+      <Donut cameraZIndex={zIndex} />
+      <Donut cameraZIndex={zIndex} />
       <Donut cameraZIndex={zIndex} />
       <Donut cameraZIndex={zIndex} />
       <Donut cameraZIndex={zIndex} />

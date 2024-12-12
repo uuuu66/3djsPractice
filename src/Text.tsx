@@ -4,6 +4,8 @@ import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 extend({ TextGeometry });
 
 const Text = () => {
-  return <div className="absolute bottom-2">dsfads</div>;
+  return (
+    <div className="fixed bottom-2 text-yellow">dsfads,{window.scrollY}</div>
+  );
 };
 export default Text;
