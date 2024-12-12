@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+
 import gsap from "gsap";
 import useCameraStore from "./useCamerStore";
 
@@ -7,6 +8,22 @@ const ScrollSpeedUpdater = () => {
   const lastScrollY = useRef(0); // 이전 스크롤 위치
   const lastTime = useRef(0); // 이전 시간
   const currentSpeed = useRef(1); // 현재 speed 값 캐싱
+  const timeoutRef = useRef<number>(0); // 속도 초기화를 위한 타이머
+
+  const resetSpeed = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+    timeoutRef.current = setTimeout(() => {
+      gsap.to(currentSpeed, {
+        current: 1,
+        duration: 1,
+        ease: "power2.out",
+        onUpdate: function () {
+          setSpeed(currentSpeed.current);
+        },
+      });
+    }, 200); // 200ms 동안 추가 이벤트가 없으면 속도를 초기화
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,46 +51,37 @@ const ScrollSpeedUpdater = () => {
         }
 
         // 변화가 있을 때만 GSAP 애니메이션 실행
+        if (Math.abs(newSpeed - currentSpeed.current) > 0.01) {
+          currentSpeed.current = newSpeed; // 업데이트된 속도 캐싱
 
-        currentSpeed.current = newSpeed; // 업데이트된 속도 캐싱
-
-        gsap.to(
-          { value: useCameraStore.getState().speed },
-          {
-            value: Math.min(newSpeed, 5), // 안전하게 최대값 제한
+          gsap.to(currentSpeed, {
+            current: newSpeed,
             duration: 0.5,
             ease: "power2.out",
             onUpdate: function () {
-              const clampedSpeed = Math.min(this.targets()[0].value, 5); // 실시간으로 클램핑
-              setSpeed(clampedSpeed);
+              setSpeed(currentSpeed.current); // 상태 업데이트
             },
-          }
-        );
+          });
+        }
       }
 
       lastScrollY.current = currentScrollY;
       lastTime.current = currentTime;
+
+      // 스크롤 끝난 후 속도 초기화
+      resetSpeed();
     };
-    const handleScrollEnd = () => {
-      gsap.to(
-        { value: useCameraStore.getState().speed },
-        {
-          value: 1, // 안전하게 최대값 제한
-          duration: 2,
-          ease: "power2.out",
-          onUpdate: function () {
-            const clampedSpeed = 1; // 실시간으로 클램핑
-            setSpeed(clampedSpeed);
-          },
-        }
-      );
+
+    const handleMouseMove = () => {
+      resetSpeed(); // 마우스 움직임이 감지되면 속도를 초기화
     };
-    // 이벤트 리스너 추가
-    window.addEventListener("scrollend", handleScrollEnd);
+
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener("mousemove", handleMouseMove);
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("scrollend", handleScrollEnd);
+      window.removeEventListener("mousemove", handleMouseMove);
     };
   }, [setSpeed]);
 
