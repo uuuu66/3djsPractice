@@ -22,7 +22,7 @@ const CanvasCamera: React.FC<Props> = ({ zIndex }) => {
         positionX.current = x * Math.abs(x - 1);
         positionY.current = y * Math.abs(y - 1);
         cameraRef.current.rotation.y = -x / 10;
-        cameraRef.current.rotation.x = -y / 10;
+        cameraRef.current.rotation.x = y / 10;
       }
     };
     document.addEventListener("mousemove", mouseMoveEvent);
