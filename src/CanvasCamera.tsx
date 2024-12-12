@@ -19,8 +19,10 @@ const CanvasCamera: React.FC<Props> = ({ zIndex }) => {
       const y =
         ((window.innerHeight / 2 - event.clientY) / window.innerHeight) * MAX;
       if (cameraRef.current) {
-        positionX.current = x * (1 - x);
-        positionY.current = y * (1 - y);
+        positionX.current = x * Math.abs(x - 1);
+        positionY.current = y * Math.abs(y - 1);
+        cameraRef.current.rotation.y = -x / 10;
+        cameraRef.current.rotation.x = -y / 10;
       }
     };
     document.addEventListener("mousemove", mouseMoveEvent);
