@@ -12,7 +12,7 @@ function App() {
     <div className="w-screen h-4screen flex flex-col relative items-center justify-center p-36">
       <div
         id="canvas-container"
-        className="fixed w-screen h-[calc(100vh-1px)] flex justify-center  items-center top-0 bg-gray-dark bg-opacity-75"
+        className="fixed w-screen h-screen flex justify-center  items-center bottom-0 bg-gray-dark bg-opacity-75"
       >
         <RCanvas />
         <Text />
