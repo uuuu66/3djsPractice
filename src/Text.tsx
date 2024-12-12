@@ -5,7 +5,7 @@ import useCameraStore from "./useCamerStore";
 extend({ TextGeometry });
 
 const Text = () => {
-  const { speed, cameraZIndex, setCamereZIndex, setSpeed } = useCameraStore();
+  const { speed, cameraZIndex, setSpeed } = useCameraStore();
   return (
     <div className="fixed bottom-2 text-gray-light">
       숫자만 입력!!!!! speed
@@ -17,15 +17,8 @@ const Text = () => {
           setSpeed(e.target.valueAsNumber);
         }}
       />
-      cameraZ
-      <input
-        value={cameraZIndex}
-        style={{ backgroundColor: "black" }}
-        type="number"
-        onChange={(e) => {
-          setCamereZIndex(e.target.valueAsNumber);
-        }}
-      />
+      cameraZ:
+      {cameraZIndex}
     </div>
   );
 };
