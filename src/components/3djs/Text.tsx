@@ -5,19 +5,12 @@ import useCameraStore from "./hooks/useCamerStore";
 extend({ TextGeometry });
 
 const Text = () => {
-  const { speed, cameraZIndex, setSpeed } = useCameraStore();
+  const { speed, cameraZIndex } = useCameraStore();
   return (
-    <div className="fixed bottom-2  flex gap-2 bg-gray-light p-2">
-      숫자만 입력!!!!!
+    <div className="fixed left-2  flex flex-col gap-2 bg-gray-light p-2 w-40">
       <span>
-        speed
-        <input
-          value={speed}
-          type="number"
-          onChange={(e) => {
-            setSpeed(e.target.valueAsNumber);
-          }}
-        />
+        speed:
+        {speed}
       </span>
       <span>
         cameraZ:

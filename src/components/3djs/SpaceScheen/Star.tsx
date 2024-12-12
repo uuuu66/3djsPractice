@@ -38,7 +38,7 @@ const Star = () => {
 
   useFrame(() => {
     animate();
-    if (Math.abs(position.z - cameraZIndex) < 20) {
+    if (Math.abs(position.z - cameraZIndex) < 10) {
       setPosition(
         new Vector3(
           randomizePosition(50),

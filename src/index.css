@@ -137,3 +137,32 @@ body,
   height: 100vh;
   background-color: black;
 }
+.text .move {
+  position: absolute;
+  top: 0;
+}
+.text {
+  transform-style: preserve-3d;
+  top: 0;
+  transform: perspective(500px) rotateX(33deg) rotateY(0) rotate(0);
+}
+.text div.list {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.text div.list span {
+  font-size: 4rem;
+  height: 20px;
+  font-weight: 900;
+}
+.top-dim {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+.bottom-dim {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+}
