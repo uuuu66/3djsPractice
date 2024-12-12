@@ -36,7 +36,7 @@ const Donut = (props: Props) => {
         new Vector3(
           randomizePosition(),
           randomizePosition(),
-          cameraZIndex - 1000
+          cameraZIndex - 500
         )
       );
     }
@@ -44,7 +44,7 @@ const Donut = (props: Props) => {
   return (
     <mesh ref={meshRef} position={position}>
       <meshStandardMaterial wireframe />
-      <boxGeometry args={[0.2, 0.2, 0.2]} />
+      <sphereGeometry args={[0.03, 0.03, 0.03]} />
     </mesh>
   );
 };

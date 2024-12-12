@@ -10,7 +10,7 @@ const CanvasCamera: React.FC<Props> = ({ zIndex }) => {
       aspect={window.innerWidth / window.innerHeight / 4}
       makeDefault
       position={new Vector3(0, 0, zIndex)}
-      fov={80}
+      fov={100}
       zoom={-50}
     />
   );
