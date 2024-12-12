@@ -54,10 +54,27 @@ const ScrollSpeedUpdater = () => {
       lastScrollY.current = currentScrollY;
       lastTime.current = currentTime;
     };
-
+    const handleScrollEnd = () => {
+      gsap.to(
+        { value: useCameraStore.getState().speed },
+        {
+          value: 1, // 안전하게 최대값 제한
+          duration: 2,
+          ease: "power2.out",
+          onUpdate: function () {
+            const clampedSpeed = 1; // 실시간으로 클램핑
+            setSpeed(clampedSpeed);
+          },
+        }
+      );
+    };
     // 이벤트 리스너 추가
+    window.addEventListener("scrollend", handleScrollEnd);
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scrollend", handleScrollEnd);
+    };
   }, [setSpeed]);
 
   return null;

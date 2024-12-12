@@ -26,7 +26,7 @@ export default {
         "4xl": "2rem",
       },
       height: {
-        fullPage: "1000vh",
+        fullPage: "10000vh",
       },
     },
   },
