@@ -32,7 +32,13 @@ const Donut = (props: Props) => {
   useFrame(() => {
     animate();
     if (Math.abs(position.z - cameraZIndex) < 300) {
-      setPosition(new Vector3(randomizePosition(), randomizePosition(), -1000));
+      setPosition(
+        new Vector3(
+          randomizePosition(),
+          randomizePosition(),
+          cameraZIndex - 1000
+        )
+      );
     }
   });
   return (
