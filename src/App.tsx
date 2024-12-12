@@ -21,7 +21,7 @@ function App() {
       </div>
       <span>his</span>
       <span>his</span>
-      <span>his</span>
+      <span className="sticky top-2/3 h-2 w-3 bg-blue">his</span>
       <span>his</span>
       <span>his</span> <span>his</span>
     </div>

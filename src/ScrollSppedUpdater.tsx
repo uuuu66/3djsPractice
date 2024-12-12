@@ -34,18 +34,21 @@ const ScrollSpeedUpdater = () => {
         }
 
         // 변화가 있을 때만 GSAP 애니메이션 실행
-        if (Math.abs(newSpeed - currentSpeed.current) > 0.01) {
-          currentSpeed.current = newSpeed; // 업데이트된 속도 캐싱
 
-          gsap.to(currentSpeed, {
-            current: newSpeed,
+        currentSpeed.current = newSpeed; // 업데이트된 속도 캐싱
+
+        gsap.to(
+          { value: useCameraStore.getState().speed },
+          {
+            value: Math.min(newSpeed, 5), // 안전하게 최대값 제한
             duration: 0.5,
             ease: "power2.out",
             onUpdate: function () {
-              setSpeed(currentSpeed.current); // 상태 업데이트
+              const clampedSpeed = Math.min(this.targets()[0].value, 5); // 실시간으로 클램핑
+              setSpeed(clampedSpeed);
             },
-          });
-        }
+          }
+        );
       }
 
       lastScrollY.current = currentScrollY;
