@@ -1,36 +1,34 @@
-import { useState } from "react";
 import CanvasCamera from "./CanvasCamera";
 import { useFrame } from "@react-three/fiber";
 import Donut from "./Donut";
+import useCameraStore from "./useCamerStore";
 
 const SwimSpace = () => {
-  const [zIndex, setZIndex] = useState(500);
+  const { cameraZIndex, speed, setCamereZIndex } = useCameraStore();
   useFrame(() => {
-    setZIndex((prev) => prev - 1);
+    setCamereZIndex(cameraZIndex - speed);
   });
   return (
     <>
-      <CanvasCamera zIndex={zIndex} />
+      <CanvasCamera zIndex={cameraZIndex} />
       <ambientLight intensity={1} color="#ffffff" />
-      <Donut cameraZIndex={zIndex} />
-      <Donut cameraZIndex={zIndex} />
-      <Donut cameraZIndex={zIndex} />
-      <Donut cameraZIndex={zIndex} />
-      <Donut cameraZIndex={zIndex} />
-      <Donut cameraZIndex={zIndex} />
-      <Donut cameraZIndex={zIndex} />
-      <Donut cameraZIndex={zIndex} />
-      <Donut cameraZIndex={zIndex} />
-      <Donut cameraZIndex={zIndex} />
-      <Donut cameraZIndex={zIndex} />
-      <Donut cameraZIndex={zIndex} />
-      <Donut cameraZIndex={zIndex} />
-      <Donut cameraZIndex={zIndex} />
-      <Donut cameraZIndex={zIndex} />
-      <Donut cameraZIndex={zIndex} />
-      <Donut cameraZIndex={zIndex} />
-      <Donut cameraZIndex={zIndex} />
-      <Donut cameraZIndex={zIndex} />
+      <Donut cameraZIndex={cameraZIndex} />
+      <Donut cameraZIndex={cameraZIndex} />
+      <Donut cameraZIndex={cameraZIndex} />
+      <Donut cameraZIndex={cameraZIndex} />
+      <Donut cameraZIndex={cameraZIndex} />
+      <Donut cameraZIndex={cameraZIndex} />
+      <Donut cameraZIndex={cameraZIndex} />
+      <Donut cameraZIndex={cameraZIndex} />
+      <Donut cameraZIndex={cameraZIndex} />
+      <Donut cameraZIndex={cameraZIndex} />
+      <Donut cameraZIndex={cameraZIndex} />
+      <Donut cameraZIndex={cameraZIndex} />
+      <Donut cameraZIndex={cameraZIndex} />
+      <Donut cameraZIndex={cameraZIndex} />
+      <Donut cameraZIndex={cameraZIndex} />
+      <Donut cameraZIndex={cameraZIndex} />
+      <Donut cameraZIndex={cameraZIndex} />
       <color attach="background" args={["black"]} />
     </>
   );
