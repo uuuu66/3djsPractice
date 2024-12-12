@@ -31,7 +31,7 @@ const Donut = (props: Props) => {
 
   useFrame(() => {
     animate();
-    if (Math.abs(position.z - cameraZIndex) < 300) {
+    if (Math.abs(position.z - cameraZIndex) < 50) {
       setPosition(
         new Vector3(
           randomizePosition(),
