@@ -1,6 +1,7 @@
 import { PerspectiveCamera as CameraRef, Vector3 } from "three";
 import { PerspectiveCamera } from "@react-three/drei";
 import { useCallback, useEffect, useRef } from "react";
+import useCameraStore from "./hooks/useCamerStore";
 
 interface Props {
   zIndex: number;
@@ -12,6 +13,7 @@ const CanvasCamera: React.FC<Props> = ({ zIndex }) => {
   const cameraRef = useRef<CameraRef>(null);
   const positionX = useRef(0);
   const positionY = useRef(0);
+  const { fov, zoom } = useCameraStore();
   const calcualteRotation = useCallback((degree: number) => {
     if (degree > MAX_ROTATION) return MAX_ROTATION;
     if (degree < -MAX_ROTATION) return -MAX_ROTATION;
@@ -42,8 +44,8 @@ const CanvasCamera: React.FC<Props> = ({ zIndex }) => {
       aspect={window.innerWidth / window.innerHeight / 4}
       makeDefault
       position={new Vector3(positionX.current, positionY.current, zIndex)}
-      fov={100}
-      zoom={-50}
+      fov={fov}
+      zoom={zoom}
     />
   );
 };

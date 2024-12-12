@@ -1,9 +1,9 @@
-import CanvasCamera from "./CanvasCamera";
+import CanvasCamera from "../CanvasCamera";
 import { useFrame } from "@react-three/fiber";
 
-import useCameraStore from "./useCamerStore";
+import useCameraStore from "../hooks/useCamerStore";
 import { useMemo } from "react";
-import Star from "./Star";
+import Star from "../SpaceScheen/Star";
 
 const SwimSpace = () => {
   const { cameraZIndex, speed, setCamereZIndex } = useCameraStore();

@@ -2,9 +2,9 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import Text from "./Text";
-import RCanvas from "./Canvas";
-import ScrollSpeedUpdater from "./ScrollSppedUpdater";
+import Text from "./components/3djs/Text";
+import RCanvas from "./components/3djs/Canvas";
+import ScrollSpeedUpdater from "./components/ScrollSppedUpdater";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 

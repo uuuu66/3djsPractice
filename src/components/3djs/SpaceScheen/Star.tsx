@@ -1,23 +1,32 @@
 import { useFrame } from "@react-three/fiber";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { Mesh, Vector3 } from "three";
-import useCameraStore from "./useCamerStore";
+import useCameraStore from "../hooks/useCamerStore";
 
 const Star = () => {
   const { cameraZIndex } = useCameraStore();
   const meshRef = useRef<Mesh>(null);
-  const randomizePosition = useCallback(() => {
-    return (Math.random() - 0.5) * (Math.random() * 50) + (Math.random() - 0.5);
+  const randomizePosition = useCallback((offset: number) => {
+    return (
+      (Math.random() - 0.5) * (Math.random() * offset) + (Math.random() - 0.5)
+    );
   }, []);
-  const randomizeZ = useCallback(() => {
-    return Math.random() * -500;
-  }, []);
+  const randomizeNumber = useCallback(
+    (offset: number, subtractOffset?: number) => {
+      return (Math.random() - (subtractOffset || 0)) * offset;
+    },
+    []
+  );
   const rotation = useMemo(() => {
     return { x: (Math.random() - 0.5) * 0.1, y: (Math.random() - 0.5) * 0.1 };
   }, []);
 
   const [position, setPosition] = useState(
-    new Vector3(randomizePosition(), randomizePosition(), randomizeZ())
+    new Vector3(
+      randomizePosition(50),
+      randomizePosition(50),
+      randomizeNumber(-500)
+    )
   );
 
   const animate = useCallback(() => {
@@ -32,8 +41,8 @@ const Star = () => {
     if (Math.abs(position.z - cameraZIndex) < 20) {
       setPosition(
         new Vector3(
-          randomizePosition(),
-          randomizePosition(),
+          randomizePosition(50),
+          randomizePosition(50),
           cameraZIndex - 500
         )
       );
@@ -41,8 +50,8 @@ const Star = () => {
   });
   return (
     <mesh ref={meshRef} position={position}>
-      <meshStandardMaterial wireframe />
-      <sphereGeometry args={[0.03, 0.03, 0.03]} />
+      <meshStandardMaterial transparent />
+      <sphereGeometry args={[randomizeNumber(0.01, -1)]} />
     </mesh>
   );
 };

@@ -1,6 +1,6 @@
 import { extend } from "@react-three/fiber";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
-import useCameraStore from "./useCamerStore";
+import useCameraStore from "./hooks/useCamerStore";
 
 extend({ TextGeometry });
 

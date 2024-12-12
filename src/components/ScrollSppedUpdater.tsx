@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
 import gsap from "gsap";
-import useCameraStore from "./useCamerStore";
+import useCameraStore from "./3djs/hooks/useCamerStore";
 
 const ScrollSpeedUpdater = () => {
   const { setSpeed } = useCameraStore();

@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-import SwimSpace from "./SwimSpace";
+import SwimSpace from "./SpaceScheen/SwimSpace";
 
 const RCanvas: React.FC = () => {
   return (
