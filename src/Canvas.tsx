@@ -3,7 +3,9 @@ import SwimSpace from "./SwimSpace";
 
 const RCanvas: React.FC = () => {
   return (
-    <Canvas>
+    <Canvas
+      onWheel={(e) => e.stopPropagation()} // 휠 이벤트 전파 차단
+    >
       <SwimSpace />
     </Canvas>
   );
