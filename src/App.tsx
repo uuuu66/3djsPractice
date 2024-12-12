@@ -10,7 +10,7 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 function App() {
   return (
-    <div className="w-screen h-fullPage flex flex-col relative items-center justify-center p-36">
+    <div className="w-screen h-fullPage flex flex-col relative items-center  justify-center p-36">
       <ScrollSpeedUpdater />
       <div
         id="canvas-container"

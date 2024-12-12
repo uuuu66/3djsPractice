@@ -1,12 +1,10 @@
 import { useFrame } from "@react-three/fiber";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { Mesh, Vector3 } from "three";
+import useCameraStore from "./useCamerStore";
 
-interface Props {
-  cameraZIndex: number;
-}
-const Donut = (props: Props) => {
-  const { cameraZIndex } = props;
+const Star = () => {
+  const { cameraZIndex } = useCameraStore();
   const meshRef = useRef<Mesh>(null);
   const randomizePosition = useCallback(() => {
     return (Math.random() - 0.5) * (Math.random() * 50) + (Math.random() - 0.5);
@@ -48,4 +46,4 @@ const Donut = (props: Props) => {
     </mesh>
   );
 };
-export default Donut;
+export default Star;

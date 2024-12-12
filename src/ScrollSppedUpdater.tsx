@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react";
-
 import gsap from "gsap";
 import useCameraStore from "./useCamerStore";
 
@@ -7,6 +6,7 @@ const ScrollSpeedUpdater = () => {
   const { setSpeed } = useCameraStore();
   const lastScrollY = useRef(0); // 이전 스크롤 위치
   const lastTime = useRef(0); // 이전 시간
+  const currentSpeed = useRef(1); // 현재 speed 값 캐싱
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,7 +21,6 @@ const ScrollSpeedUpdater = () => {
       // 시간 변화량
       const deltaTime = currentTime - lastTime.current;
 
-      // 속도 계산
       if (deltaTime > 0) {
         const scrollSpeed = Math.abs(deltaY / deltaTime) * 1000; // px/s 단위 속도
         let newSpeed = Math.min(1 + scrollSpeed / 500, 5); // speed 값 제한 (최대 5)
@@ -34,24 +33,26 @@ const ScrollSpeedUpdater = () => {
           newSpeed = 1; // 기본 속도로 복귀
         }
 
-        // 부드러운 전환을 위해 GSAP 사용
-        gsap.to(
-          { value: useCameraStore.getState().speed },
-          {
-            value: newSpeed,
+        // 변화가 있을 때만 GSAP 애니메이션 실행
+        if (Math.abs(newSpeed - currentSpeed.current) > 0.01) {
+          currentSpeed.current = newSpeed; // 업데이트된 속도 캐싱
+
+          gsap.to(currentSpeed, {
+            current: newSpeed,
             duration: 0.5,
             ease: "power2.out",
             onUpdate: function () {
-              setSpeed(this.targets()[0].value);
+              setSpeed(currentSpeed.current); // 상태 업데이트
             },
-          }
-        );
+          });
+        }
       }
 
       lastScrollY.current = currentScrollY;
       lastTime.current = currentTime;
     };
 
+    // 이벤트 리스너 추가
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [setSpeed]);
