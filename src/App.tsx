@@ -17,6 +17,11 @@ function App() {
         <RCanvas />
         <Text />
       </div>
+      <span>his</span>
+      <span>his</span>
+      <span>his</span>
+      <span>his</span>
+      <span>his</span> <span>his</span>
     </div>
   );
 }

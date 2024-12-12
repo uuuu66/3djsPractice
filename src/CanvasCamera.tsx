@@ -1,17 +1,22 @@
 import { PerspectiveCamera as CameraRef, Vector3 } from "three";
 import { PerspectiveCamera } from "@react-three/drei";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 interface Props {
   zIndex: number;
 }
 const MAX = 0.4;
+const MAX_ROTATION = 0.1;
 
 const CanvasCamera: React.FC<Props> = ({ zIndex }) => {
   const cameraRef = useRef<CameraRef>(null);
   const positionX = useRef(0);
   const positionY = useRef(0);
-
+  const calcualteRotation = useCallback((degree: number) => {
+    if (degree > MAX_ROTATION) return MAX_ROTATION;
+    if (degree < -MAX_ROTATION) return -MAX_ROTATION;
+    return degree;
+  }, []);
   useEffect(() => {
     const mouseMoveEvent = (event: MouseEvent) => {
       const x =
@@ -21,8 +26,8 @@ const CanvasCamera: React.FC<Props> = ({ zIndex }) => {
       if (cameraRef.current) {
         positionX.current = x * Math.abs(x - 1);
         positionY.current = y * Math.abs(y - 1);
-        cameraRef.current.rotation.y = -x / 10;
-        cameraRef.current.rotation.x = y / 10;
+        cameraRef.current.rotation.y = calcualteRotation(-x / 60);
+        cameraRef.current.rotation.x = calcualteRotation(y / 100);
       }
     };
     document.addEventListener("mousemove", mouseMoveEvent);
