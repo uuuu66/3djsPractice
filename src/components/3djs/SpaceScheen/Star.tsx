@@ -49,10 +49,16 @@ const Star = () => {
     }
   });
   return (
-    <mesh ref={meshRef} position={position}>
-      <meshStandardMaterial transparent />
-      <sphereGeometry args={[randomizeNumber(0.01, -1)]} />
-    </mesh>
+    <group position={position}>
+      <mesh>
+        <meshStandardMaterial transparent color={"#3FE6FF"} wireframe />
+        <boxGeometry args={[0.025, 0.025, 0.025]} />
+      </mesh>
+      <mesh ref={meshRef}>
+        <meshStandardMaterial transparent color={"#fff"} />
+        <sphereGeometry args={[randomizeNumber(0.01, -1)]} />
+      </mesh>
+    </group>
   );
 };
 export default Star;

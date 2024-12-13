@@ -4,10 +4,10 @@ import { Group, Vector3 } from "three";
 import { useFrame } from "@react-three/fiber";
 
 const Donut = () => {
-  const { cameraZIndex } = useCameraStore();
+  const { cameraZIndex, speed } = useCameraStore();
   const ref = useRef<Group>(null);
   useFrame(() => {
-    if (ref.current) ref.current.rotation.y += 0.02;
+    if (ref.current) ref.current.rotation.y += speed / 50;
   });
 
   return (
@@ -18,7 +18,7 @@ const Donut = () => {
       </mesh>
       <mesh>
         <sphereGeometry args={[]} />
-        <meshStandardMaterial wireframe wireframeLinewidth={4} />
+        <meshStandardMaterial wireframe wireframeLinewidth={1} />
       </mesh>
     </group>
   );

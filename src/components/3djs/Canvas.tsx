@@ -4,6 +4,7 @@ import SwimSpace from "./SpaceScheen/SwimSpace";
 const RCanvas: React.FC = () => {
   return (
     <Canvas
+      className="w-full"
       onWheel={(e) => e.stopPropagation()} // 휠 이벤트 전파 차단
     >
       <SwimSpace />

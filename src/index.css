@@ -143,6 +143,7 @@ body,
 }
 .text {
   transform-style: preserve-3d;
+  position: "absolute";
   top: 0;
   transform: perspective(500px) rotateX(33deg) rotateY(0) rotate(0);
 }
@@ -165,4 +166,19 @@ body,
 }
 .bottom-dim {
   background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+}
+.circle {
+  opacity: 0;
+}
+.circle span {
+  font-family: Pretendard;
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 145%; /* 69.6px */
+  letter-spacing: -1.44px;
+  opacity: 0;
+}
+.circle img {
+  opacity: 1;
 }

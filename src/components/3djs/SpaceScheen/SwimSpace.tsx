@@ -13,7 +13,7 @@ const SwimSpace = () => {
     setCamereZIndex(cameraZIndex - speed);
   });
   const stars = useMemo(() => {
-    return new Array(30).fill(1);
+    return new Array(60).fill(1);
   }, []);
   return (
     <>
