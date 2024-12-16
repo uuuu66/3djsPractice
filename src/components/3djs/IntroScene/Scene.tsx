@@ -2,7 +2,7 @@ import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import useSticky from "../../../hooks/useSticky";
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import circleBorderImg from "../../../../public/gradient_border_circle.webp";
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 const TIMINGS = [
@@ -18,7 +18,7 @@ const TIMINGS = [
 ];
 const CIRCLE_TEXT_TIMING = {
   START: 7000,
-  GAP: 2000,
+  GAP: 1250,
   END: 19300,
 };
 const IntroScene: React.FC = () => {
@@ -36,10 +36,6 @@ const IntroScene: React.FC = () => {
   const hiddenBar = useRef<HTMLDivElement>(null);
   const outerCircleRef = useRef<HTMLDivElement>(null);
 
-  const subCircles: string[] = useMemo(
-    () => categories.map((category) => `.${category}-circle`),
-    [categories]
-  );
   const loadingRef = useRef(() => {
     const loadingAnimationTimeLine = gsap.timeline({
       scrollTrigger: {
@@ -110,6 +106,10 @@ const IntroScene: React.FC = () => {
       .fromTo(".circle", { opacity: 0 }, { opacity: 0.4 }, 0);
   });
   const circlePresentRef = useRef(() => {
+    const subCircles: HTMLElement[] = gsap.utils.toArray(
+      categories.map((category) => `.${category}-circle`)
+    );
+
     subCircles.forEach((box, index) => {
       const x =
         -1 * (MAX_WIDTH / 2 - 200) +
@@ -134,46 +134,47 @@ const IntroScene: React.FC = () => {
     });
   });
   const circleTextExposureRef = useRef(() => {
+    const subCircles: HTMLElement[] = gsap.utils.toArray(
+      categories.map((category) => `.${category}-circle`)
+    );
+    const textClassNames: HTMLElement[] = gsap.utils.toArray(
+      categories.map((category) => `.${category}-circle .text`)
+    );
+
     subCircles.forEach((box, index) => {
-      const textClasName = `${box} .text`;
-      gsap.from(box, {
-        opacity: 0.4,
-        duration: 1,
-        scrollTrigger: {
-          trigger: entireContainerRef.current,
-          start: `top+=${
-            CIRCLE_TEXT_TIMING.START + index * CIRCLE_TEXT_TIMING.GAP
-          }px top`,
-          end: `+=${CIRCLE_TEXT_TIMING.GAP}px`,
-          scrub: 0.2,
-          markers: true,
-          invalidateOnRefresh: true,
-          fastScrollEnd: true,
+      console.log(entireContainerRef.current);
+      gsap.fromTo(
+        box,
+        {
+          opacity: 0.4,
         },
-      });
+        {
+          opacity: 1,
+          scrollTrigger: {
+            trigger: entireContainerRef.current,
+            start: `top+=${
+              CIRCLE_TEXT_TIMING.START + index * CIRCLE_TEXT_TIMING.GAP + 10
+            }px top`,
+            end: `+=${CIRCLE_TEXT_TIMING.GAP}px`,
+            toggleActions: "play pause resume reset", // 애니메이션 동작 제어
+            markers: true,
+            invalidateOnRefresh: true,
+            fastScrollEnd: true,
+          },
+        }
+      );
+    });
+    textClassNames.map((box, index) => {
       gsap.to(box, {
         opacity: 1,
         scrollTrigger: {
           trigger: entireContainerRef.current,
           start: `top+=${
-            CIRCLE_TEXT_TIMING.START + index * CIRCLE_TEXT_TIMING.GAP + 10
-          }px top`,
-          end: `+=${CIRCLE_TEXT_TIMING.GAP}px`,
-          scrub: 0.2,
-          markers: true,
-          invalidateOnRefresh: true,
-          fastScrollEnd: true,
-        },
-      });
-      gsap.to(textClasName, {
-        opacity: 1,
-        scrollTrigger: {
-          trigger: entireContainerRef.current,
-          start: `top+=${
             CIRCLE_TEXT_TIMING.START + index * CIRCLE_TEXT_TIMING.GAP
           }px top`,
           end: `+=${CIRCLE_TEXT_TIMING.GAP}px`,
-          scrub: 0.2,
+          toggleActions: "play pause resume reset", // 애니메이션 동작 제어
+
           markers: true,
           invalidateOnRefresh: true,
           fastScrollEnd: true,
@@ -182,6 +183,12 @@ const IntroScene: React.FC = () => {
     });
   });
   const circleTranslateToCenterRef = useRef(() => {
+    const subCircles: HTMLElement[] = gsap.utils.toArray(
+      categories.map((category) => `.${category}-circle`)
+    );
+    const textClasNames: HTMLElement[] = gsap.utils.toArray(
+      categories.map((category) => `.${category}-circle .text`)
+    );
     const circleTranslateToCenterTimeLine = gsap.timeline({
       scrollTrigger: {
         trigger: entireContainerRef.current,
@@ -194,18 +201,23 @@ const IntroScene: React.FC = () => {
       },
     });
     subCircles.forEach((box) => {
-      circleTranslateToCenterTimeLine
-        .to(
-          box,
-          {
-            x: 0,
-          },
-          0.5
-        )
-        .to(".text", { opacity: 0 }, 0.5);
+      circleTranslateToCenterTimeLine.to(
+        box,
+        {
+          x: 0,
+        },
+        0.5
+      );
+    });
+    textClasNames.forEach((textClassName) => {
+      circleTranslateToCenterTimeLine.to(textClassName, { opacity: 0 }, 0.5);
     });
   });
   const reduceCircleRef = useRef(() => {
+    const subCircles: HTMLElement[] = gsap.utils.toArray(
+      categories.map((category) => `.${category}-circle`)
+    );
+
     const reduceCircleAnimationTimeLine = gsap.timeline({
       scrollTrigger: {
         trigger: entireContainerRef.current,
@@ -264,6 +276,10 @@ const IntroScene: React.FC = () => {
     );
   });
   const divdeCircleRef = useRef(() => {
+    const subCircles: HTMLElement[] = gsap.utils.toArray(
+      categories.map((category) => `.${category}-circle`)
+    );
+
     subCircles.forEach((box, index) => {
       const points = [
         [-360, 0],
@@ -296,8 +312,13 @@ const IntroScene: React.FC = () => {
     });
   });
   const textAfterDivideCircleRef = useRef(() => {
-    subCircles.forEach((box) => {
-      const textClasName = `${box} .text`;
+    const subCircles: HTMLElement[] = gsap.utils.toArray(
+      categories.map((category) => `.${category}-circle`)
+    );
+    const textClasName = gsap.utils.toArray(
+      categories.map((category) => `.${category}-circle .text`)
+    );
+    subCircles.forEach(() => {
       gsap.fromTo(
         textClasName,
         {
@@ -354,6 +375,25 @@ const IntroScene: React.FC = () => {
     loadingRef.current?.();
     textAfterDivideCircleRef?.current?.();
   });
+  useEffect(() => {
+    const beforeUnloadEvent = () => {
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+      }, 100);
+    };
+    const loadEvent = () => {
+      ScrollTrigger.refresh();
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+      }, 100);
+    };
+    window.addEventListener("beforeunload", beforeUnloadEvent);
+    window.addEventListener("load", loadEvent);
+    return () => {
+      window.removeEventListener("beforeunload", beforeUnloadEvent);
+      window.removeEventListener("load", loadEvent);
+    };
+  }, []);
 
   return (
     <Section>
