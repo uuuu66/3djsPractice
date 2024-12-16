@@ -142,7 +142,6 @@ const IntroScene: React.FC = () => {
     );
 
     subCircles.forEach((box, index) => {
-      console.log(entireContainerRef.current);
       gsap.fromTo(
         box,
         {
@@ -160,6 +159,12 @@ const IntroScene: React.FC = () => {
             markers: true,
             invalidateOnRefresh: true,
             fastScrollEnd: true,
+            scrub: true,
+            onUpdate: (self) => {
+              if (self.isActive) {
+                gsap.to(box, { opacity: 1 });
+              }
+            },
           },
         }
       );
@@ -173,11 +178,11 @@ const IntroScene: React.FC = () => {
             CIRCLE_TEXT_TIMING.START + index * CIRCLE_TEXT_TIMING.GAP
           }px top`,
           end: `+=${CIRCLE_TEXT_TIMING.GAP}px`,
-          toggleActions: "play pause resume reset", // 애니메이션 동작 제어
-
+          toggleActions: "play pause resume reset",
           markers: true,
           invalidateOnRefresh: true,
           fastScrollEnd: true,
+          scrub: true,
         },
       });
     });
