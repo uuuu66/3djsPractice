@@ -1,10 +1,11 @@
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import useSticky from "../../../hooks/useSticky";
+import useSticky from "../../hooks/useSticky";
 import { useEffect, useMemo, useRef } from "react";
-import circleBorderImg from "../../../../public/gradient_border_circle.webp";
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+import circleBorderImg from "../../../public/gradient_border_circle.webp";
+import useScrollBarStore from "../../stores/useScrollBarStore";
+
 const TIMINGS = [
   [0, 1000],
   [2000, 1000],
@@ -21,10 +22,13 @@ const CIRCLE_TEXT_TIMING = {
   GAP: 1250,
   END: 19300,
 };
+gsap.registerPlugin(useGSAP);
+
 const IntroScene: React.FC = () => {
   const { entireContainerRef, stickyContainerRef, Section } = useSticky({
-    height: "60000px",
+    height: "50000px",
   });
+  const { mainSection } = useScrollBarStore();
   const categories = useMemo(() => {
     return ["홍보", "취미", "입시", "구인시장", "공연", "교육"];
   }, []);
@@ -35,7 +39,6 @@ const IntroScene: React.FC = () => {
   const moveBar2 = useRef<HTMLDivElement>(null);
   const hiddenBar = useRef<HTMLDivElement>(null);
   const outerCircleRef = useRef<HTMLDivElement>(null);
-
   const loadingRef = useRef(() => {
     const loadingAnimationTimeLine = gsap.timeline({
       scrollTrigger: {
@@ -44,7 +47,7 @@ const IntroScene: React.FC = () => {
         start: "top top",
         end: `+=${TIMINGS[0][1]}px`,
         scrub: 0.7,
-
+        scroller: ".smooth-scroller-container",
         invalidateOnRefresh: true,
       },
     });
@@ -70,6 +73,7 @@ const IntroScene: React.FC = () => {
         start: `top+=${TIMINGS[1][0]}px top`,
         end: `+=${TIMINGS[1][1]}px`,
         invalidateOnRefresh: true,
+        scroller: ".smooth-scroller-container",
         scrub: 1, //start-end
       },
     });
@@ -162,7 +166,9 @@ const IntroScene: React.FC = () => {
             scrub: true,
             onUpdate: (self) => {
               if (self.isActive) {
-                gsap.to(box, { opacity: 1 });
+                gsap.to(box, {
+                  opacity: self.progress < 0.4 ? 0.4 : self.progress,
+                });
               }
             },
           },
@@ -378,19 +384,18 @@ const IntroScene: React.FC = () => {
     barExitRef.current?.();
     moveBarRef.current?.();
     loadingRef.current?.();
-    textAfterDivideCircleRef?.current?.();
-  });
+    textAfterDivideCircleRef.current?.();
+  }, [mainSection]);
   useEffect(() => {
     const beforeUnloadEvent = () => {
       setTimeout(() => {
         window.scrollTo(0, 0);
-      }, 100);
+      }, 0);
     };
     const loadEvent = () => {
-      ScrollTrigger.refresh();
       setTimeout(() => {
-        window.scrollTo(0, 0);
-      }, 100);
+        ScrollTrigger.refresh();
+      }, 0);
     };
     window.addEventListener("beforeunload", beforeUnloadEvent);
     window.addEventListener("load", loadEvent);
@@ -404,8 +409,9 @@ const IntroScene: React.FC = () => {
     <Section>
       <div
         ref={stickyContainerRef}
-        className="flex justify-center items-center h-screen  w-full top-0"
+        className="flex justify-center items-center h-screen  w-full top-0 overflow-hidden"
       >
+        hi
         <div
           className="w-1 h-[480px] relative move-bar-wrapper"
           ref={moveBarWrapperRef}
